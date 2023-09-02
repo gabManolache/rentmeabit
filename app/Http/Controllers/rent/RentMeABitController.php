@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Rent;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use App\Models\Product;
-use Illuminate\Http\Request;
+use App\Models\RelatedProductView;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class RentMeABitController extends Controller
@@ -53,17 +55,24 @@ class RentMeABitController extends Controller
     // Restituisce un prodotto per ID
     public function ecommerce_detail($id)
     {
-        $product = Product::with('properties', 'photos', 'user')
-                        ->withCount(['feedbacks as average_rating' => function($query) {
-                            $query->select(DB::raw('coalesce(avg(rating),0)'));
-                        }])
-                        ->find($id);
+        // Prima query: Ottieni le informazioni sul prodotto principale
+        $product = Product::with(['properties', 'photos', 'user'])
+            ->withCount(['feedbacks as average_rating' => function($query) {
+                $query->select(DB::raw('coalesce(avg(rating),0)'));
+            }])
+            ->find($id);
 
         if (!$product) {
             return response()->json(['message' => 'Product not found'], 404);
         }
 
-        $product->average_rating = round($product->average_rating, 2);  // Arrotonda la media delle valutazioni
+        $product->average_rating = round($product->average_rating, 2);
+
+
+
+        // Seconda query per i prodotti correlati
+        $relatedProducts = RelatedProductView::where('product_id', $product->id)->get();
+
 
         $pageConfigs = [
             'pageClass' => 'ecommerce-application',
@@ -76,7 +85,8 @@ class RentMeABitController extends Controller
         return view('/content/apps/ecommerce/app-ecommerce-details', [
             'pageConfigs' => $pageConfigs,
             'breadcrumbs' => $breadcrumbs,
-            'product' => $product
+            'product' => $product,
+            'relatedProducts' => $relatedProducts
         ]);
     }
 

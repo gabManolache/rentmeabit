@@ -1,0 +1,36 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('product_related', function (Blueprint $table) {
+            $table->id();
+            $table->string('product_id')->references('id')->on('products')->onDelete('cascade');
+        $table->string('related_id')->references('id')->on('products')->onDelete('cascade');
+
+        // altri campi
+        $table->timestamps();  // Per created_at e updated_at
+        $table->softDeletes(); // Per deleted_at
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('product_related');
+    }
+};

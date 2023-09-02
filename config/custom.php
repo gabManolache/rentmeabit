@@ -1,7 +1,7 @@
 <?php
 return [
     'custom' => [
-        'mainLayoutType' => 'vertical', // Options[String]: vertical(default), horizontal
+        'mainLayoutType' => 'horizontal', // Options[String]: vertical(default), horizontal
         'theme' => 'dark', // options[String]: 'light'(default), 'dark', 'bordered', 'semi-dark'
         'sidebarCollapsed' => false, // options[Boolean]: true, false(default) (warning:this option only applies to the vertical theme.)
         'navbarColor' => '', // options[String]: bg-primary, bg-info, bg-warning, bg-success, bg-danger, bg-dark (default: '' for #fff)

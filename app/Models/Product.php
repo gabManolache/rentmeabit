@@ -50,5 +50,10 @@ class Product extends Model
         return $this->hasMany(ProductFeedback::class, 'product_id');
     }
 
+    public function relatedProducts()
+    {
+        return $this->hasMany(ProductRelated::class, 'product_id');
+    }
+
 
 }

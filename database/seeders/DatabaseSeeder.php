@@ -2,6 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Models\Order;
+use App\Models\OrderProduct;
+use App\Models\Product;
+use App\Models\ProductFeedback;
+use App\Models\ProductPhoto;
+use App\Models\ProductProp;
+use App\Models\ProductRelated;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -30,21 +37,31 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
-         // Creo 10 utenti con i loro prodotti, proprietà, foto e feedback
-        \App\Models\User::factory(10)
+        // Crea utenti con prodotti, proprietà, foto, feedback
+        User::factory(10)
         ->has(
-            \App\Models\Product::factory(5)
-                ->has(\App\Models\ProductProp::factory(2), 'properties')
-                ->has(\App\Models\ProductPhoto::factory(3), 'photos')
-                ->has(\App\Models\ProductFeedback::factory(2), 'feedbacks'),
+            Product::factory(5)
+                ->has(ProductProp::factory(2), 'properties')
+                ->has(
+                    ProductFeedback::factory(rand(0, 100)), // Numero casuale di feedback
+                    'feedbacks'
+                )
+                ->has(ProductPhoto::factory()->count(4)->state(['main' => false]), 'photos')
+                ->has(ProductPhoto::factory()->state(['main' => true]), 'photos')
+                ->afterCreating(function($product) {
+                    ProductRelated::factory(rand(2, 7))->create([
+                        'product_id' => $product->id,
+                        'related_id' => Product::all()->random()->id,
+                    ]);
+                }),
             'products'
         )
         ->create();
 
-    // Creo 20 ordini con i dettagli dei prodotti ordinati
-    \App\Models\Order::factory(20)
-        ->has(\App\Models\OrderProduct::factory(3), 'orderProducts')
-        ->create();
+        // Crea ordini con i dettagli dei prodotti ordinati
+        Order::factory(20)
+            ->has(OrderProduct::factory(3), 'orderProducts')
+            ->create();
 
 
     \App\Models\User::factory(10)->create();

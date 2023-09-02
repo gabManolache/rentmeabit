@@ -124,12 +124,6 @@
           "slug": "app-ecommerce-shop"
         },
         {
-          "url": "app/ecommerce/details",
-          "name": "Details",
-          "icon": "circle",
-          "slug": "app-ecommerce-details"
-        },
-        {
           "url": "app/ecommerce/wishlist",
           "name": "Wishlist",
           "icon": "circle",
