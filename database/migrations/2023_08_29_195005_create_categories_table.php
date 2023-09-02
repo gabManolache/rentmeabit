@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_parent')->nullable();
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('code')->unique();
             $table->string('label');
             $table->text('description')->nullable();
             $table->timestamps();
 
             // Chiave esterna per la relazione con la categoria genitore
-            $table->foreign('id_parent')->references('id')->on('categories')
+            $table->foreign('parent_id')->references('id')->on('categories')
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
         });

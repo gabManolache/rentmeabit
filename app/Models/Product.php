@@ -22,7 +22,7 @@ class Product extends Model
 
     public function properties()
     {
-        return $this->hasMany(ProductProps::class, 'id_product');
+        return $this->hasMany(ProductProp::class, 'product_id');
     }
 
     public function user()
@@ -32,7 +32,23 @@ class Product extends Model
 
     public function photos()
     {
-        return $this->hasMany(ProductPhotos::class, 'id_product');
+        return $this->hasMany(ProductPhoto::class, 'product_id');
     }
+
+    public function wishLists()
+    {
+        return $this->hasMany(WishList::class, 'product_id');
+    }
+
+    public function rents()
+    {
+        return $this->hasMany(OrderProduct::class, 'product_id');
+    }
+
+    public function feedbacks()
+    {
+        return $this->hasMany(ProductFeedback::class, 'product_id');
+    }
+
 
 }

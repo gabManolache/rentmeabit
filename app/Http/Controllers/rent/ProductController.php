@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\ProductPhotos;
-use App\Models\ProductProps;
+use App\Models\ProductPhoto;
+use App\Models\ProductProp;
 use Error;
 use Exception;
 
@@ -363,7 +363,7 @@ class ProductController extends Controller
         }
 
         // Trova la foto
-        $photo = ProductPhotos::find($photoId);
+        $photo = ProductPhoto::find($photoId);
 
         if (!$photo) {
             $responseData = [

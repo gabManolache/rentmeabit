@@ -5,16 +5,16 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\RentMeABit>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\WishList>
  */
-class RentMeABitFactory extends Factory
+class WishListFactory extends Factory
 {
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
+    public function definition()
     {
         return [
             //

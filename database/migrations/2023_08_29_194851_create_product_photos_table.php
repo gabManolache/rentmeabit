@@ -11,17 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-      Schema::create('product_photos', function (Blueprint $table) {
-        $table->id();
-        $table->unsignedBigInteger('id_product');
-        $table->string('url');
-        $table->string('description')->nullable();
-        $table->integer('width')->nullable();
-        $table->integer('height')->nullable();
-        $table->timestamps();
-
-        $table->foreign('id_product')->references('id')->on('products')->onDelete('cascade');
-    });
+        Schema::create('product_photos', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('product_id');
+            $table->string('url');
+            $table->string('description')->nullable();
+            $table->integer('width')->nullable();
+            $table->integer('height')->nullable();
+            $table->boolean('main')->default(false);  // Aggiunta del nuovo campo 'main'
+            $table->timestamps();
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+        });
     }
 
     /**

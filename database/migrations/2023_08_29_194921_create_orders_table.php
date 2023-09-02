@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_feedback', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('user_id');
-            $table->integer('rating')->nullable();  // Ad esempio, da 1 a 5
-            $table->text('comment')->nullable();
-            $table->timestamps();
-
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->string('status')->default('pending'); // Aggiunta della colonna 'status'
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->timestamp('created_at')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->timestamp('updated_at')->nullable();
+            $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_feedback');
+        Schema::dropIfExists('rent_me_a_bits');
     }
 };

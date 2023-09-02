@@ -2,18 +2,18 @@
 
 namespace Database\Factories;
 
-use App\Models\Categories;
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Categories>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Category>
  */
-class CategoriesFactory extends Factory
+class CategoryFactory extends Factory
 {
 
-    protected $model = Categories::class;
+    protected $model = Category::class;
 
     /**
      * Define the model's default state.
@@ -23,7 +23,7 @@ class CategoriesFactory extends Factory
     public function definition(): array
     {
         return [
-            'id_parent' => null,
+            'parent_id' => null,
             'code' => Str::lower($this->faker->unique()->word),
             'label' => $this->faker->word,
             'description' => $this->faker->sentence,

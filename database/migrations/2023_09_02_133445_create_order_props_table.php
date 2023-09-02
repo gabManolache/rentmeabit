@@ -8,26 +8,28 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
     public function up()
     {
-        Schema::create('product_props', function (Blueprint $table) {
+        Schema::create('order_props', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->unique();
-            $table->string('label');
-            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('order_id');
+            $table->string('key');
             $table->string('value');
             $table->timestamps();
-
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('product_props');
+        Schema::dropIfExists('order_props');
     }
 };

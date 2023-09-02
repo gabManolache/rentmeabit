@@ -2,16 +2,16 @@
 
 namespace Database\Factories;
 
-use App\Models\ProductPhotos;
+use App\Models\ProductPhoto;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ProductPhotos>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ProductPhoto>
  */
-class ProductPhotosFactory extends Factory
+class ProductPhotoFactory extends Factory
 {
 
-    protected $model = ProductPhotos::class;
+    protected $model = ProductPhoto::class;
 
 
     /**
@@ -22,13 +22,15 @@ class ProductPhotosFactory extends Factory
     public function definition(): array
     {
       return [
-        'id_product' => function () {
+        'product_id' => function () {
             return \App\Models\Product::factory()->create()->id;
         },
         'url' => $this->faker->imageUrl(),
         'description' => $this->faker->sentence,
         'width' => $this->faker->numberBetween(100, 1000),
         'height' => $this->faker->numberBetween(100, 1000),
+        'main' => $this->faker->boolean,  // Aggiunto il nuovo campo 'main'
+
     ];
     }
 }

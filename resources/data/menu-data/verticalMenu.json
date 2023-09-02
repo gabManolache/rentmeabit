@@ -118,7 +118,7 @@
       "slug": "",
       "submenu": [
         {
-          "url": "app/ecommerce/shop",
+          "url": "rent",
           "name": "Shop",
           "icon": "circle",
           "slug": "app-ecommerce-shop"

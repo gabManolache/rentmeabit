@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Categories extends Model
+class Category extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-      'id_parent',
+      'parent_id',
       'code',
       'label',
       'description',
@@ -19,12 +19,12 @@ class Categories extends Model
     // Definisci la relazione uno-a-molti con le sottocategorie
     public function subcategories()
     {
-        return $this->hasMany(Category::class, 'id_parent');
+        return $this->hasMany(Category::class, 'parent_id');
     }
 
     // Definisci la relazione molti-a-uno con la categoria genitore
     public function parentCategory()
     {
-        return $this->belongsTo(Category::class, 'id_parent');
+        return $this->belongsTo(Category::class, 'parent_id');
     }
 }

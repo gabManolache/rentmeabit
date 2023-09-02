@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\rent\RentMeABitController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\DashboardController;
@@ -43,6 +44,12 @@ Route::group(['prefix' => 'dashboard'], function () {
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->group(function () {
     Route::get('/dashboard', function () { return view('dashboard');})->name('dashboard');
+
+    Route::get('rent/', [RentMeABitController::class, 'get_products'])->name('ecommerce-shop');
+    Route::get('rent/details/{id}', [RentMeABitController::class, 'ecommerce_detail'])->name('ecommerce-details');
+    Route::get('rent/wishlist', [RentMeABitController::class, 'ecommerce_wishlist'])->name('ecommerce-wishlist');
+    Route::get('rent/checkout', [RentMeABitController::class, 'ecommerce_checkout'])->name('ecommerce-checkout');
+
 });
 
 
@@ -75,10 +82,7 @@ Route::group(['prefix' => 'app'], function () {
     Route::get('invoice/edit', [AppsController::class, 'invoice_edit'])->name('app-invoice-edit');
     Route::get('invoice/add', [AppsController::class, 'invoice_add'])->name('app-invoice-add');
     Route::get('invoice/print', [AppsController::class, 'invoice_print'])->name('app-invoice-print');
-    Route::get('ecommerce/shop', [AppsController::class, 'ecommerce_shop'])->name('app-ecommerce-shop');
-    Route::get('ecommerce/details', [AppsController::class, 'ecommerce_details'])->name('app-ecommerce-details');
-    Route::get('ecommerce/wishlist', [AppsController::class, 'ecommerce_wishlist'])->name('app-ecommerce-wishlist');
-    Route::get('ecommerce/checkout', [AppsController::class, 'ecommerce_checkout'])->name('app-ecommerce-checkout');
+
     Route::get('file-manager', [AppsController::class, 'file_manager'])->name('app-file-manager');
     Route::get('access-roles', [AppsController::class, 'access_roles'])->name('app-access-roles');
     Route::get('access-permission', [AppsController::class, 'access_permission'])->name('app-access-permission');

@@ -11,24 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-      Schema::create('products', function (Blueprint $table) {
-        $table->id();
-        $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        Schema::create('products', function (Blueprint $table) {
+            $table->id();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
-        $table->string('title');
-        $table->string('status');
-        $table->integer('rents')->default(0);
-        $table->text('description');
-        $table->decimal('price', 10, 2);
-        $table->unsignedBigInteger('user_id');
+            $table->string('title');
+            $table->string('status');
+            $table->integer('rents')->default(0);
+            $table->text('description');
+            $table->decimal('price', 10, 2);
+            $table->unsignedBigInteger('user_id');
 
-        $table->unsignedBigInteger('created_by')->nullable();
-        $table->timestamp('created_at')->nullable();
-        $table->unsignedBigInteger('updated_by')->nullable();
-        $table->timestamp('updated_at')->nullable();
-        $table->softDeletes();
-        $table->string('deleted')->default('no');
-    });
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->timestamp('created_at')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->timestamp('updated_at')->nullable();
+            $table->softDeletes();
+            $table->string('deleted')->default('no');
+        });
     }
 
     /**

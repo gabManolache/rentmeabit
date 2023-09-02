@@ -5,16 +5,16 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ProductProps>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\OrderProps>
  */
-class ProductPropsFactory extends Factory
+class OrderPropFactory extends Factory
 {
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
+    public function definition()
     {
         return [
             //
