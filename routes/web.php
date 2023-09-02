@@ -38,6 +38,31 @@ Route::group(['prefix' => 'dashboard'], function () {
 });
 /* Route Dashboards */
 
+
+
+
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->group(function () {
+    Route::get('/dashboard', function () { return view('dashboard');})->name('dashboard');
+});
+
+
+/* Route Pages */
+Route::get('/error', [MiscellaneousController::class, 'error'])->name('error');
+
+/* Route Authentication Pages */
+Route::group(['prefix' => '/'], function () {
+    Route::get('login', [AuthenticationController::class, 'login'])->name('login');
+    Route::get('register', [AuthenticationController::class, 'register'])->name('register');
+    Route::get('forgot-password', [AuthenticationController::class, 'forgot_password'])->name('forgot-password');
+    Route::get('reset-password', [AuthenticationController::class, 'reset_password'])->name('reset-password');
+    Route::get('verify-email', [AuthenticationController::class, 'verify_email'])->name('verify-email');
+    Route::get('two-steps', [AuthenticationController::class, 'two_steps'])->name('two-steps');
+    Route::get('register-multisteps', [AuthenticationController::class, 'register_multi_steps'])->name('register-multisteps');
+    Route::get('lock-screen', [AuthenticationController::class, 'lock_screen'])->name('lock_screen');
+});
+/* Route Authentication Pages */
+
+
 /* Route Apps */
 Route::group(['prefix' => 'app'], function () {
     Route::get('email', [AppsController::class, 'emailApp'])->name('app-email');
@@ -203,27 +228,7 @@ Route::group(['prefix' => 'page'], function () {
 /* Modal Examples */
 Route::get('/modal-examples', [PagesController::class, 'modal_examples'])->name('modal-examples');
 
-/* Route Pages */
-Route::get('/error', [MiscellaneousController::class, 'error'])->name('error');
 
-/* Route Authentication Pages */
-Route::group(['prefix' => 'auth'], function () {
-    Route::get('login-basic', [AuthenticationController::class, 'login_basic'])->name('auth-login-basic');
-    Route::get('login-cover', [AuthenticationController::class, 'login_cover'])->name('auth-login-cover');
-    Route::get('register-basic', [AuthenticationController::class, 'register_basic'])->name('auth-register-basic');
-    Route::get('register-cover', [AuthenticationController::class, 'register_cover'])->name('auth-register-cover');
-    Route::get('forgot-password-basic', [AuthenticationController::class, 'forgot_password_basic'])->name('auth-forgot-password-basic');
-    Route::get('forgot-password-cover', [AuthenticationController::class, 'forgot_password_cover'])->name('auth-forgot-password-cover');
-    Route::get('reset-password-basic', [AuthenticationController::class, 'reset_password_basic'])->name('auth-reset-password-basic');
-    Route::get('reset-password-cover', [AuthenticationController::class, 'reset_password_cover'])->name('auth-reset-password-cover');
-    Route::get('verify-email-basic', [AuthenticationController::class, 'verify_email_basic'])->name('auth-verify-email-basic');
-    Route::get('verify-email-cover', [AuthenticationController::class, 'verify_email_cover'])->name('auth-verify-email-cover');
-    Route::get('two-steps-basic', [AuthenticationController::class, 'two_steps_basic'])->name('auth-two-steps-basic');
-    Route::get('two-steps-cover', [AuthenticationController::class, 'two_steps_cover'])->name('auth-two-steps-cover');
-    Route::get('register-multisteps', [AuthenticationController::class, 'register_multi_steps'])->name('auth-register-multisteps');
-    Route::get('lock-screen', [AuthenticationController::class, 'lock_screen'])->name('auth-lock_screen');
-});
-/* Route Authentication Pages */
 
 /* Route Charts */
 Route::group(['prefix' => 'chart'], function () {
@@ -238,4 +243,5 @@ Route::get('/maps/leaflet', [ChartsController::class, 'maps_leaflet'])->name('ma
 
 // locale Route
 Route::get('lang/{locale}', [LanguageController::class, 'swap']);
+
 
