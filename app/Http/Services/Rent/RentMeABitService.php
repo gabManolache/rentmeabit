@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Rent;
+namespace App\Http\Services\Rent;
 
-use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\RelatedProductView;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class RentMeABitController extends Controller
+class RentMeABitService
 {
     // Restituisce 10 prodotti
     public function get_products()
@@ -35,21 +35,13 @@ class RentMeABitController extends Controller
             ];
         });
 
-
-        $pageConfigs = [
-            'contentLayout' => "content-detached-left-sidebar",
-            'pageClass' => 'ecommerce-application',
+        $response = [
+            'message' => 'Recupero riuscito',
+            'products' => $products,
+            'code' => Response::HTTP_OK
         ];
 
-        $breadcrumbs = [
-            ['link' => "/", 'name' => "Home"], ['name' => "Rent a Bit"]
-        ];
-
-        return view('/content/apps/ecommerce/app-ecommerce-shop', [
-            'pageConfigs' => $pageConfigs,
-            'breadcrumbs' => $breadcrumbs,
-            'products' => $products
-        ]);
+        return $response;
     }
 
     // Restituisce un prodotto per ID
@@ -63,31 +55,27 @@ class RentMeABitController extends Controller
             ->find($id);
 
         if (!$product) {
-            return response()->json(['message' => 'Product not found'], 404);
+            $response = [
+                'message' => 'Product not found',
+                'code' => Response::HTTP_NO_CONTENT,
+                'data' => [],
+            ];
+        }else{
+
+            $product->average_rating = round($product->average_rating, 2);
+            // Seconda query per i prodotti correlati
+            $relatedProducts = RelatedProductView::where('product_id', $product->id)->get();
+
+            $response = [
+                'message' => 'Recupero riuscito',
+                'product' => $product,
+                'related_products' => $relatedProducts,
+                'code' => Response::HTTP_OK
+            ];
         }
 
-        $product->average_rating = round($product->average_rating, 2);
+        return $response;
 
-
-
-        // Seconda query per i prodotti correlati
-        $relatedProducts = RelatedProductView::where('product_id', $product->id)->get();
-
-
-        $pageConfigs = [
-            'pageClass' => 'ecommerce-application',
-        ];
-
-        $breadcrumbs = [
-            ['link' => "/", 'name' => "Home"], ['link' => "rent/", 'name' => "Rent A Bit"], ['name' => "Shop"]
-        ];
-
-        return view('/content/apps/ecommerce/app-ecommerce-details', [
-            'pageConfigs' => $pageConfigs,
-            'breadcrumbs' => $breadcrumbs,
-            'product' => $product,
-            'relatedProducts' => $relatedProducts
-        ]);
     }
 
 
@@ -98,7 +86,13 @@ class RentMeABitController extends Controller
 
         $user->wishlist()->attach($productId);  // Supponendo che tu abbia definito una relazione "wishlist" nel modello User
 
-        return response()->json(['message' => 'Product added to wishlist']);
+        $response = [
+            'message' => 'Product added to wishlist',
+            'code' => Response::HTTP_CREATED,
+            'data' => [],
+        ];
+
+        return $response;
     }
 
     // Crea un nuovo ordine (Semplificato)
@@ -111,6 +105,13 @@ class RentMeABitController extends Controller
         // Altri campi...
         $order->save();
 
-        return response()->json(['message' => 'Order created', 'order_id' => $order->id]);
+        $response = [
+            'message' => 'Order created',
+            'order_id' => $order->id,
+            'code' => Response::HTTP_CREATED,
+            'data' => [],
+        ];
+
+        return $response;
     }
 }

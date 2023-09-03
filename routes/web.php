@@ -1,7 +1,12 @@
 <?php
 
-use App\Http\Controllers\rent\RentMeABitController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Web\Categories\CategoryController;
+use App\Http\Controllers\WishListController;
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\Web\Rent\RentMeABitController;
+
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AppsController;
@@ -45,10 +50,49 @@ Route::group(['prefix' => 'dashboard'], function () {
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->group(function () {
     Route::get('/dashboard', function () { return view('dashboard');})->name('dashboard');
 
-    Route::get('rent/', [RentMeABitController::class, 'get_products'])->name('ecommerce-shop');
-    Route::get('rent/details/{id}', [RentMeABitController::class, 'ecommerce_detail'])->name('ecommerce-details');
-    Route::get('rent/wishlist', [RentMeABitController::class, 'ecommerce_wishlist'])->name('ecommerce-wishlist');
+    /*
+     * List of endpoints related with shop
+     */
+    Route::get('pages/rent', [RentMeABitController::class, 'get_products'])->name('ecommerce-shop');
+    Route::get('pages/product/details/{id}', [RentMeABitController::class, 'ecommerce_detail'])->name('ecommerce-details');
     Route::get('rent/checkout', [RentMeABitController::class, 'ecommerce_checkout'])->name('ecommerce-checkout');
+
+    /*
+     * List of endpoints related with categories
+     *  GET	        /product	            index
+     *  GET	        /product/create	        create
+     *  POST	    /product	            store
+     *  GET	        /product/{id}	        show
+     *  GET	        /product/{id}/edit	    edit
+     *  PUT/PATCH	/product/{id}	        update
+     *  DELETE	    /product/{id}	        destroy
+     */
+    Route::resource('product', ProductController::class);
+
+    /*
+     * List of endpoints related with categories
+     *  GET	        /category	            index
+     *  GET	        /category/create	    create
+     *  POST	    /category	            store
+     *  GET	        /category/{id}	        show
+     *  GET	        /category/{id}/edit	    edit
+     *  PUT/PATCH	/category/{id}	        update
+     *  DELETE	    /category/{id}	        destroy
+     */
+    Route::get('pages/category', [CategoryController::class, 'show_categories'])->name('show-categories');
+    Route::resource('category', CategoryController::class);
+
+    /*
+     * List of endpoints related with categories
+     *  GET	        /wishlist	            index
+     *  GET	        /wishlist/create	    create
+     *  POST	    /wishlist	            store
+     *  GET	        /wishlist/{id}	        show
+     *  GET	        /wishlist/{id}/edit	    edit
+     *  PUT/PATCH	/wishlist/{id}	        update
+     *  DELETE	    /wishlist/{id}	        destroy
+     */
+    Route::resource('wishlist', WishListController::class);
 
 });
 

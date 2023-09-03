@@ -1,6 +1,9 @@
 <?php
 
 return [
+    "Category List" => "Category List",
+    "Rent a Bit" => "Rent a Bit",
+    "Management" => "Management",
     "Apps & Pages" => "Apps & Pages",
     "User Interface" => "User Interface",
     "Dashboards" => "Dashboards",

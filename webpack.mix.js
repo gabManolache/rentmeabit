@@ -50,7 +50,7 @@ mixAssetsDir('scss/base/core/**/!(_)*.scss', (src, dest) =>
 )
 
 // script js
-mixAssetsDir('js/scripts/**/*.js', (src, dest) => mix.scripts(src, dest))
+mixAssetsDir('js/**/*.js', (src, dest) => mix.scripts(src, dest))
 
 /*
  |--------------------------------------------------------------------------

@@ -7,6 +7,8 @@
 // Datatable (jquery)
 $(function () {
         // Variable declaration for table
+        var baseUrl = window.location.origin;
+
         var dt_user_table = $('.datatables-users'),
                 select2 = $('.select2'),
                 userView = baseUrl + 'app/user/view/account',

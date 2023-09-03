@@ -6,8 +6,8 @@
       "slug": "",
       "submenu": [
         {
-          "url": "dashboard/analytics",
-          "name": "Analytics",
+          "url": "pages/category",
+          "name": "Category List",
           "icon": "activity",
           "slug": "dashboard-analytics"
         },
@@ -18,6 +18,32 @@
           "slug": "dashboard-ecommerce"
         }
       ]
+    },
+    {
+        "name": "Management",
+        "icon": "home",
+        "slug": "",
+        "submenu": [
+            {
+                "url": "pages/category",
+                "name": "Category List",
+                "icon": "activity",
+                "slug": "show-categories"
+            }
+        ]
+    },
+    {
+        "name": "Shop",
+        "icon": "home",
+        "slug": "",
+        "submenu": [
+            {
+                "url": "pages/rent",
+                "name": "Rent a Bit",
+                "icon": "activity",
+                "slug": "ecommerce-shop"
+            }
+        ]
     },
     {
       "name": "Apps",
